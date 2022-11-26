@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="./signup.css">
 </head>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
     <div id="container">
         <h1>Please Sign Up or Login.</h1>
         <div id="form-signup">
-            <form action="#" method="post">
+            <form method="post">
                 <label for="name">Name</label>
                 <input type="text" id="name" required>
                 <label for="email">Email</label>
@@ -19,11 +20,16 @@
                 <label for="password">Password</label>
                 <input type="password" name="" id="password" required>
                 <div class="clearfix">
-                    <button type="submit" id="signbutton">Sign up</button>
+                    <button type="submit" id="signbutton" class="signup">Sign up</button>
                     <button type="submit" id="loginbutton">Sign in</button>    
                 </div>
             </form>
         </div>
+        <div id="notif" class="notif">
+
+        </div>
+
     </div>
+    <script src="signup.js"></script>
 </body>
 </html>
