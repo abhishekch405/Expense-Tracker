@@ -1,16 +1,3 @@
-// window.addEventListener("DOMContentLoaded",showonscreen);
-
-// function showonscreen(){
-//     axios.get('http://localhost:4000')
-//         .then(expenses=>{
-//             //console.log(expenses.data)
-//             for(let i=0;i<expenses.data.length;i++){
-//                 addNewLineElement(expenses.data[i]);
-//             }
-//         })
-//         .catch(err=>console.log(err))
-//     ;    
-// }
 
 const form=document.getElementById('form-signup');
 

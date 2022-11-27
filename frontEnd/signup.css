@@ -62,7 +62,7 @@ button {
   #signbutton,#loginbutton {
     padding: 10px 10px;
     background-color: #f44336;
-    float: left;
+    float: right;
     width: 50%;
   }
 
@@ -81,4 +81,11 @@ button {
     margin: auto;
     align-items: center;
     justify-content: center;
+  }
+
+  a{
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    
   }

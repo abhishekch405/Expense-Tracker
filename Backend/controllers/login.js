@@ -1,6 +1,6 @@
 const Users=require('../models/users');
 
-exports.postUser= async (req,res,next)=>{
+exports.register= async (req,res,next)=>{
     const {name,email,password}=req.body;
 
     Users.findAll({where:{email:email}})
@@ -34,3 +34,29 @@ exports.postUser= async (req,res,next)=>{
     //     res.status(201).json(expenses[0]);
     // }).catch(err=>console.log(err));        
 };
+
+exports.login=(req,res,next)=>{
+    const {email, password}=req.body;
+    Users.findAll({where:{email:email}})
+        .then(users=>{
+            const user=users[0];
+            if(!user){
+                res.status(404).json({success:false,message:'This user does nott exist!, kindly signup.'})
+            }
+            else if (user && user.password!=password){
+                console.log("This user",user.password);
+                res.status(404).json({success:false,message:' Password does not match !'})
+                
+            }
+            else if (user && user.password==password){
+                console.log("This user",user.password);
+                res.status(201).json({success:true,message:'Successfully logged in!'})
+                
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+
+
+}
