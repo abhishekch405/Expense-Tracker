@@ -20,6 +20,9 @@ async function signup(e){
             try {
                 res=await axios.post(url,newuser);
                 console.log(res);
+                name="";
+                password='';
+                email="";
             } catch (error) {
                 console.log(error);
             }

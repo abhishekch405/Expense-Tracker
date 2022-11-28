@@ -23,7 +23,11 @@ async function login(e){
                 const notif=document.getElementById('notif');
                 notif.classList.add("active");
                 notif.innerHTML=`<h2>${res.data.message}</h2>`
-                setTimeout(()=>{notif.classList.remove("active"); console.log("done")},3000)
+                setTimeout(()=>{
+                    notif.classList.remove("active"); 
+                    console.log("done");
+                    window.location.href='../expenses/index.html';
+                },3000)
             } catch (err) {
                 alert(err.response.data.message);
             }

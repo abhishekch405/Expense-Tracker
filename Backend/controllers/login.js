@@ -22,7 +22,7 @@ exports.register= async (req,res,next)=>{
             }
         })
         .catch(err=>{
-            console.log(err);
+            console.log("Error in registering",err);
         })    
 };
 
