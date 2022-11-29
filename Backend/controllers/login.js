@@ -1,5 +1,7 @@
 const Users=require('../models/users');
 const bcrypt=require('bcryptjs');
+const jwt=require('jsonwebtoken');
+
 
 exports.register= async (req,res,next)=>{
     const {name,email,password}=req.body;
@@ -29,44 +31,22 @@ exports.register= async (req,res,next)=>{
 exports.login= async (req,res,next)=>{
     const {email, password}=req.body;
     try {
-        const users=await  Users.findAll({where:{email:email}}); 
-        if(users.length>0){
-            bcrypt.compare(password,users[0].password,(err,result)=>{
-                if(result){
-                    
-                    return res.status(200).json({success:true,message:'Successfully logged in!'})
-                }
-                else{
-                    console.log(err,result)
-                    return res.status(400).json({success:false,message:' Password does not match !'})
-                }
-            })
+        const user=await  Users.findOne({where:{email:email}}); 
+        if(!user){
+            res.status(404).json({success:false,message:'This user does nott exist!'});
         }
-        else{
-            return res.status(404).json({success:false,message:'This user does nott exist!'})
-        }
-    } catch (error) {
-        console.log(error);
-    }
+        const passwordCheck=await bcrypt.compare(password,user.password);
 
-    // Users.findAll({where:{email:email}})
-    //     .then(users=>{
-    //         const user=users[0];
-    //         if(!user){
-    //             return res.status(404).json({success:false,message:'This user does nott exist!'})
-    //         }
-    //         else if (user.password!=password){
-    //             console.log("This user",user.password);
-    //             return res.status(401).json({success:false,message:' Password does not match !'})
-                
-    //         }
-    //         else if (user && user.password==password){
-    //             console.log("This user",user.password);
-    //             return res.status(201).json({success:true,message:'Successfully logged in!'})
-                
-    //         }
-    //     })
-    //     .catch(err=>{
-    //         console.log(err);
-    //     })
+        if(!passwordCheck){
+            return res.status(400).json({success:false,message:' Password does not match !'})
+        }
+
+        const token=jwt.sign({id:user.id},`${process.env.TOKEN_SECRET}`);
+        return res.status(200).json({token:token,success:true,message:'Successfully logged in!'})
+        
+    }
+    catch (error) {
+        res.json(error);
+        console.log(error);
+    }   
 }
