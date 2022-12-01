@@ -75,3 +75,69 @@ del.addEventListener('click',(e)=>{
             .catch(err=>console.log(err))
     }
 })
+
+const premium=document.getElementById('premium');
+const close=document.getElementById('close');
+const payBtn=document.getElementById('pay');
+const container=document.getElementById('container');
+let amount=499;
+let orderId;
+
+
+premium.addEventListener('click',()=>{
+        container.classList.add("active");
+        const url="http://localhost:3000/premium/order";
+        const obj={amount:amount};
+    
+    axios.post(url,obj,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}})
+        .then(response=>{
+            console.log(response);
+            orderId=response.data.order.id;
+            payBtn.style="display:block";
+        })
+        .catch(err=>console.log(err));
+})
+close.addEventListener('click',()=>{
+        container.classList.remove("active");
+});
+
+
+let paymentId;
+let signature;
+payBtn.addEventListener('click',(e)=>{
+    container.classList.remove("active");
+    payBtn.style="display:none"
+    var options = {
+        "key": "rzp_test_vQI2AlV3SQaMgo", // Enter the Key ID generated from the Dashboard
+        "amount": `${amount}`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Expense Tracker",
+        "description": "Premium",
+        //"image": "https://example.com/your_logo",
+        "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response){
+            paymentId=response.razorpay_payment_id;
+            signature=response.razorpay_signature;
+           alert(`Payment successful: your order ID: ${response.razorpay_order_id} and payment ID:${response.razorpay_payment_id}`);
+            window.location.href="../premiumFrontEnd/premium.html"
+
+            console.log("oishoiajiaj",orderId);
+
+            axios.post('http://localhost:3000/transaction/detail',{orderId:orderId,paymentId:paymentId},{headers:{'Authorization':`Bearer ${localStorage.getItem('token')}`}})
+            .then()
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.description);
+    });
+    rzp1.open();
+    e.preventDefault();
+
+})

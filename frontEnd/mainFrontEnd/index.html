@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="./index.css">
     <title>Project</title>
 </head>
@@ -45,19 +45,17 @@
                 <input type="submit" class="btn btn-dark" value="Add Expense">
             </form>
             <hr>
-            <input type="submit" class="btn btn-dark" value="Get Expense">
+          
             <!--<h2 class="title">Items</h2> -->
-            <ul id="items" class="list-group">
-                <!--
+            <!-- <ul id="items" class="list-group">
+                
                 <li class="list-group-item">Item 1 <button class="btn btn-danger btn-sm float-right delete">X</button>
                 </li> 
-            -->
-
-
-                </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
+
+   
     <section id="cart">
         <h2>Expenses</h2>
         <div class="cart-row cart-header">
@@ -74,6 +72,17 @@
         </div>
 
     </section>
+
+    <button id="premium">Buy Premium</button>
+    <div class="popup-container" id="container">
+        <div class="popup">
+            <button id="close">&times;</button>
+            <h1>Expense Tracker Premium!</h1>
+            <p>Buy Premium at $499</p>
+            <button id="pay">Pay Now</button>
+        </div>
+    </div>   
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="index.js"> </script>
 </body>
 

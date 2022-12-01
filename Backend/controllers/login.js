@@ -46,7 +46,7 @@ exports.login= async (req,res,next)=>{
         
     }
     catch (error) {
-        res.json(error);
+        return res.json(error);
         console.log(error);
     }   
 }

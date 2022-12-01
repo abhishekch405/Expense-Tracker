@@ -28,7 +28,7 @@ async function login(e){
                 setTimeout(()=>{
                     notif.classList.remove("active"); 
                     console.log("Notif removed");
-                    window.location.href='../expenses/index.html';
+                    window.location.href='../mainFrontEnd/index.html';
                 },3000)
             } catch (err) {
                 alert(err.response.data.message);
