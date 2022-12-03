@@ -8,10 +8,10 @@ const router = express.Router();
 
 //router.get('/', shopController.getExpenses);
 
-router.post('/add', authorizationMiddleware.authorization,expenseController.postExpenses);
+router.post('/expense/add', authorizationMiddleware.authorization,expenseController.postExpenses);
 
-router.get('/get', authorizationMiddleware.authorization,expenseController.getExpenses);
+router.get('/expense/get', authorizationMiddleware.authorization,expenseController.getExpenses);
 
-router.post('/delete', authorizationMiddleware.authorization,expenseController.deleteExpenses);
+router.post('/expense/delete', authorizationMiddleware.authorization,expenseController.deleteExpenses);
 
 module.exports = router;

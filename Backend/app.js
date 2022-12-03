@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/user',loginRoutes);
 app.use(premiumRoutes);
-app.use('/expense',expenseRoutes);
+app.use(expenseRoutes);
 
 //{force:true}
 Users.hasMany(Expenses);

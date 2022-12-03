@@ -47,3 +47,38 @@ async function login(e){
 }
 
 
+const forgotPassword=document.getElementById('forgotpassword');
+
+forgotPassword.addEventListener('click',(e)=>{
+    
+    console.log(document.body);
+    const div=document.createElement('div');
+    div.innerHTML=`<form method="post">
+    <label for="email">Email</label>
+    <input type="text" name="" id="resetemail" required>
+    <div >
+        <button type="submit" id="resetbutton">Submit</button>    
+    </div>
+    </form>`
+    document.body.appendChild(div);
+    resetbutton.addEventListener('click',(e)=>{
+        const url="http://localhost:3000/password/forgotpassword";
+        const email=document.getElementById('resetemail');
+
+        const obj={
+            email:email
+        }
+        axios.post(url,obj)
+            .then(response=>{
+                if(!response.data.success){
+                    alert(response.data.message);
+                    window.location.href='./signup.html'
+                }
+                else{
+                    window.location.href="";
+                }
+            })
+            .catch(err=>console.log(err));
+    })
+})
+

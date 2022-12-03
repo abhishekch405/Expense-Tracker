@@ -84,4 +84,9 @@ toggle.addEventListener("change",(e)=>{
     document.body.classList.toggle("dark",e.target.checked);
 });
 
+const usersbtn=document.getElementById("get-users");
+usersbtn.addEventListener('click',(e)=>{
+    console.log(e);
+    const url="http://"
 
+})

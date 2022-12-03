@@ -13,4 +13,6 @@ router.post('/premium/order', authorizationMiddleware.authorization,premiumContr
 
 router.post('/transaction/detail', authorizationMiddleware.authorization,premiumController.updateTransaction);
 
+//router.get('/allusers',authorizationMiddleware.authorization,premiumController.getAllUsers);
+
 module.exports = router;
