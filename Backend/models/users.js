@@ -19,7 +19,11 @@ const Users= sequelize.define('users',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    hasPremium:Sequelize.BOOLEAN
+   
+    hasPremium: {
+        type:Sequelize.STRING,
+        defaultValue:false
+    },
 })
 
 module.exports=Users;

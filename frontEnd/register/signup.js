@@ -6,23 +6,24 @@ form.addEventListener('click',signup);
 async function signup(e){
         e.preventDefault();
         if(e.target.className=="signup"){
-            const name=document.getElementById('name').value;
-            const email=document.getElementById('email').value;
-            const password=document.getElementById('password').value;
-            if(name.length>0 && email.length>0 && password.length>0){
+            const name=document.getElementById('name');
+            const email=document.getElementById('email');
+            const password=document.getElementById('password');
+            if(name.value.length && email.value.length && password.value.length){
             const newuser={
-                name:name,
-                email:email,
-                password:password
+                name:name.value,
+                email:email.value,
+                password:password.value
             }
+            name.value="";
+            password.value='';
+            email.value="";
            let res;
             const url='http://localhost:3000/user/signup';
             try {
                 res=await axios.post(url,newuser);
                 console.log(res);
-                name="";
-                password='';
-                email="";
+                
             } catch (error) {
                 console.log(error);
             }

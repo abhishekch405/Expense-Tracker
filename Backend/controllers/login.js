@@ -42,7 +42,7 @@ exports.login= async (req,res,next)=>{
         }
 
         const token=jwt.sign({id:user.id},`${process.env.TOKEN_SECRET}`);
-        return res.status(200).json({token:token,success:true,message:'Successfully logged in!'})
+        return res.status(200).json({token:token,hasPremium:user.hasPremium,success:true,message:'Successfully logged in!'})
         
     }
     catch (error) {

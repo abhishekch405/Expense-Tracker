@@ -5,12 +5,12 @@ loginbtn.addEventListener('click',login);
 
 async function login(e){
         e.preventDefault();
-        const email=document.getElementById('email').value;
-        const password=document.getElementById('password').value;
-            if(email.length>0 && password.length>0){
+        const email=document.getElementById('email');
+        const password=document.getElementById('password');
+            if(email.value.length>0 && password.value.length>0){
             const object={
-                email:email,
-                password:password
+                email:email.value,
+                password:password.value
             }
             email.value="";
             password.value="";
@@ -19,6 +19,7 @@ async function login(e){
             try {
                 res=await axios.post(url,object);
                 console.log("response of post ",res.data);
+                const hasPremium=res.data.hasPremium;
                 localStorage.setItem('token',res.data.token);
 
                 const notif=document.getElementById('notif');
@@ -28,8 +29,13 @@ async function login(e){
                 setTimeout(()=>{
                     notif.classList.remove("active"); 
                     console.log("Notif removed");
+                    if(hasPremium==='0'){
                     window.location.href='../mainFrontEnd/index.html';
-                },3000)
+                    }
+                    else{
+                        window.location.href="../premiumFrontEnd/premium.html";
+                    }
+                },0)
             } catch (err) {
                 alert(err.response.data.message);
             }
