@@ -16,8 +16,9 @@ const sequelize=require('./util/database');
 const Users=require('./models/users');
 const Expenses=require('./models/expenses');
 const Orders=require('./models/orders');
-
+const Passwords=require('./models/passwords');
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors());
 app.use('/user',loginRoutes);
 app.use(premiumRoutes);
@@ -29,7 +30,8 @@ Users.hasMany(Expenses);
 Expenses.belongsTo(Users);
 Users.hasMany(Orders);
 Orders.belongsTo(Users);
-
+Users.hasMany(Passwords);
+Passwords.belongsTo(Users);
 sequelize
     .sync()
     .then(()=>{
