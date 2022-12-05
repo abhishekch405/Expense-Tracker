@@ -1,21 +1,67 @@
 //document.body.classList.toggle("dark");
-window.addEventListener("DOMContentLoaded",showExpenses);
-async function showExpenses(){
-    const url="http://localhost:3000/expense/get"
-    try {
-        const expenses= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
-        console.log(typeof expenses.data);
-        expenses.data.forEach(item=>{
-            addNewLineElement(item);
-        })
-    } catch (error) {
-        console.log(error);
-    }
-}
+// window.addEventListener("DOMContentLoaded",showExpenses);
+// async function showExpenses(){
+//     const url="http://localhost:3000/expense/get"
+//     try {
+//         const expenses= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+//         console.log(typeof expenses.data);
+//         expenses.data.forEach(item=>{
+//             addNewLineElement(item);
+//         })
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+const toggle=document.getElementById("toggle");
+
+toggle.addEventListener("change",(e)=>{
+    document.body.classList.toggle("dark",e.target.unchecked);
+});
+
 
 const form=document.getElementById('form');
 
 form.addEventListener('submit',addExpenses);
+
+const dailyBtn=document.getElementById("daily");
+const monthlyBtn=document.getElementById("monthly");
+const weeklyBtn=document.getElementById("weekly");
+
+dailyBtn.addEventListener('click',(e)=>{
+    console.log(e)
+    displayExpenses('daily');
+});
+monthlyBtn.addEventListener('click',()=>{
+    displayExpenses('monthly');
+});
+weeklyBtn.addEventListener('click',()=>{
+    displayExpenses('weekly');
+});
+
+
+
+async function displayExpenses(limit){
+  
+    const carth2tag=document.querySelector('#cart h2');
+    const Limit=limit.toUpperCase();
+    carth2tag.innerHTML=`<h2>${Limit} Expenses</h2>`
+
+    const url=`http://localhost:3000/getExpenses?${limit}`
+try {
+    const expenses=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+    expenses.forEach(expense=>{
+        addNewLineElement(expense);
+    })
+
+} catch (error) {
+    throw new Error(error);
+}
+
+}
+
+
+
 
 function addExpenses(e){
     e.preventDefault();
@@ -78,15 +124,9 @@ del.addEventListener('click',(e)=>{
 })
 
 
-const toggle=document.getElementById("toggle");
+// const usersbtn=document.getElementById("get-users");
+// usersbtn.addEventListener('click',(e)=>{
+//     console.log(e);
+//     const url="http://"
 
-toggle.addEventListener("change",(e)=>{
-    document.body.classList.toggle("dark",e.target.checked);
-});
-
-const usersbtn=document.getElementById("get-users");
-usersbtn.addEventListener('click',(e)=>{
-    console.log(e);
-    const url="http://"
-
-})
+// })
