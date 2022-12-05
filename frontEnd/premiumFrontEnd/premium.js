@@ -39,7 +39,20 @@ weeklyBtn.addEventListener('click',()=>{
     displayExpenses('weekly');
 });
 
-
+const downloadBtn=document.getElementById('download');
+downloadBtn.addEventListener('click',async ()=>{
+    const url="http://localhost:3000/download"
+    try {
+        const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+        const link=document.createElement('a');
+        link.href=`response.data.fileUrl`;
+        link.download='Myexpenses.csv';
+        link.click();     
+    } catch (error) {
+        document.innerHTML+=`<div>${error}</div>`;
+    }
+   
+})
 
 async function displayExpenses(limit){
   
@@ -123,10 +136,3 @@ del.addEventListener('click',(e)=>{
     }
 })
 
-
-// const usersbtn=document.getElementById("get-users");
-// usersbtn.addEventListener('click',(e)=>{
-//     console.log(e);
-//     const url="http://"
-
-// })
