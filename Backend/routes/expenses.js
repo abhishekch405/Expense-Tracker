@@ -14,4 +14,9 @@ router.get('/expense/get', authorizationMiddleware.authorization,expenseControll
 
 router.post('/expense/delete', authorizationMiddleware.authorization,expenseController.deleteExpenses);
 
+router.get('/download', authorizationMiddleware.authorization,expenseController.downloadExpenses);
+
+router.get('/previousdownloads', authorizationMiddleware.authorization,expenseController.previousdownload);
+
+
 module.exports = router;

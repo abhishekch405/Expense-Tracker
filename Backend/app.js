@@ -17,6 +17,8 @@ const Users=require('./models/users');
 const Expenses=require('./models/expenses');
 const Orders=require('./models/orders');
 const Passwords=require('./models/passwords');
+const Download=require('./models/download');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors());
@@ -32,6 +34,8 @@ Users.hasMany(Orders);
 Orders.belongsTo(Users);
 Users.hasMany(Passwords);
 Passwords.belongsTo(Users);
+Users.hasMany(Download);
+Download.belongsTo(Users);
 sequelize
     .sync()
     .then(()=>{

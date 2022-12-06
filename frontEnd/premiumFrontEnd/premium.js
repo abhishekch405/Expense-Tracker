@@ -1,17 +1,30 @@
-//document.body.classList.toggle("dark");
-// window.addEventListener("DOMContentLoaded",showExpenses);
-// async function showExpenses(){
-//     const url="http://localhost:3000/expense/get"
-//     try {
-//         const expenses= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
-//         console.log(typeof expenses.data);
-//         expenses.data.forEach(item=>{
-//             addNewLineElement(item);
-//         })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+
+window.addEventListener("DOMContentLoaded",previousDownloads);
+async function previousDownloads(){
+    const previosDownloadDiv=document.getElementById('previousDownloads');
+   
+    const url="http://localhost:3000/previousdownloads"
+    let response;
+    try {
+        response= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+    } catch (error) {
+        console.log(error);
+    }
+    const links=response.data.links
+    previosDownloadDiv.innerHTML='';
+    let heading=document.createElement('h2');
+    heading.innerHTML="Previous Downloads";
+    previosDownloadDiv.append(heading);
+    const ul=document.createElement('ul');
+    links.reverse().forEach(link=>{
+        const li=document.createElement('li');
+        li.innerHTML=`<a href=${link.link}>${link.fileName}</a>`
+        ul.appendChild(li);
+    });
+    previosDownloadDiv.appendChild(ul);
+
+
+}
 
 const toggle=document.getElementById("toggle");
 
@@ -45,7 +58,9 @@ downloadBtn.addEventListener('click',async ()=>{
     try {
         const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
         const link=document.createElement('a');
-        link.href=`response.data.fileUrl`;
+        link.href=`${response.data.fileUrl}`;
+        console.log(response.data);
+        link.type='application/pdf'
         link.download='Myexpenses.csv';
         link.click();     
     } catch (error) {
@@ -58,17 +73,19 @@ async function displayExpenses(limit){
   
     const carth2tag=document.querySelector('#cart h2');
     const Limit=limit.toUpperCase();
-    carth2tag.innerHTML=`<h2>${Limit} Expenses</h2>`
+    carth2tag.innerHTML=`<h2>${Limit} EXPENSES</h2>`
 
-    const url=`http://localhost:3000/getExpenses?${limit}`
+    const url=`http://localhost:3000/expense/get?${limit}`
 try {
     const expenses=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
-    expenses.forEach(expense=>{
+    const cart=document.getElementById('cart-items');
+    cart.innerHTML="";
+    expenses.data.forEach(expense=>{
         addNewLineElement(expense);
     })
 
 } catch (error) {
-    throw new Error(error);
+    console.log(error);
 }
 
 }
