@@ -22,3 +22,15 @@ input{
     
 }
 
+#download{
+    position:absolute;
+    right:5px;
+    bottom:5px;
+}
+#previousDownloads{
+    display: none;
+    padding: 5px;
+    margin: 5px;
+    right:5px;
+    border: 1px solid green;
+}

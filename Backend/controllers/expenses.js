@@ -1,6 +1,7 @@
 const Expenses=require('../models/expenses');
 const Users=require('../models/users');
-
+const Sequelize=require('sequelize');
+const Op=Sequelize.Op;
 const S3Services=require('../services/s3Services');
 // exports.getExpenses=  (req,res,next)=>{
 //     Expenses.findAll().then(expenses=>{
@@ -21,7 +22,13 @@ exports.postExpenses= async (req,res,next)=>{
 };
 
 exports.getExpenses=async (req,res,next)=>{
+
+    let totalExpenses;
     const limit=req.query.limit;
+    const page=+req.query.page||1;
+    const rows=+req.query.rows||10;
+    console.log(page,rows);
+
     let today=new Date();
     let date=new Date('1980-01-01');
     if(limit=="weekly"){
@@ -36,14 +43,25 @@ exports.getExpenses=async (req,res,next)=>{
     }
 
    try {
-    const expenses=await req.user.getExpenses();
-    const filteredExpenses=expenses.filter((expense)=>{
-        return expense.createdAt>=date;
-    })
-    //console.log(expenses);
-    return res.status(201).json(filteredExpenses);
+    const count=await req.user.countExpenses({where:{
+        createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+    }
+    });
+    totalExpenses=count;
+
+    const expenses=await req.user.getExpenses({where:{
+        createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+    },
+    order : [['createdAt','DESC']],
+    offset:(page-1)*rows,
+    limit:rows
+    });
+
+    return res.status(200).json({success:true,expenses:expenses,currentPage:page,hasPreviousPage:page>1,hasNextPage:(page*rows)<totalExpenses,previousPage:page-1,nextPage:page+1,lastPage:Math.ceil(totalExpenses/rows)});
+
 
    } catch (error) {
+    res.json(error);
     console.log(error);
    }
 }
