@@ -3,6 +3,7 @@ const Users=require('../models/users');
 const Sequelize=require('sequelize');
 const Op=Sequelize.Op;
 const S3Services=require('../services/s3Services');
+const sequelize = require('../util/database');
 // exports.getExpenses=  (req,res,next)=>{
 //     Expenses.findAll().then(expenses=>{
 //         // console.log("These are the expenses",expenses[0]);
@@ -104,4 +105,21 @@ exports.previousdownload=async (req,res,next)=>{
     } catch (error) {
         console.log(error);
     }
+}
+
+exports.leaderboard=async (req,res,next)=>{
+
+    const leaderBoard= await Users.findAll({
+        attributes:['id','name',[sequelize.fn('sum',sequelize.col('expenses.amount')),'total_expense']],
+        include:[
+            {
+                model:Expenses,
+                attributes:[]
+            }
+        ],
+        group:['users.id'],
+        order:[['total_expense','DESC']]
+    })
+
+    return res.json({success:true,leaderBoard:leaderBoard});
 }

@@ -18,5 +18,7 @@ router.get('/download', authorizationMiddleware.authorization,expenseController.
 
 router.get('/previousdownloads', authorizationMiddleware.authorization,expenseController.previousdownload);
 
+router.get('/leaderboard',authorizationMiddleware.authorization,expenseController.leaderboard);
+
 
 module.exports = router;

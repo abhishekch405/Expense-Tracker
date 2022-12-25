@@ -28,9 +28,9 @@ input{
     bottom:5px;
 }
 #previousDownloads{
-    display: none;
+    /* display: none; */
     padding: 5px;
     margin: 5px;
     right:5px;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }

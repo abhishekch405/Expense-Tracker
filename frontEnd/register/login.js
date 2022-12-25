@@ -35,7 +35,7 @@ async function login(e){
                     else{
                         window.location.href="../premiumFrontEnd/premium.html";
                     }
-                },0)
+                },2000)
             } catch (err) {
                 alert(err.response.data.message);
             }

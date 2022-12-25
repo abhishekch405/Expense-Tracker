@@ -1,7 +1,10 @@
 
-window.addEventListener("DOMContentLoaded",previousDownloads);
+//swindow.addEventListener("DOMContentLoaded",previousDownloads);
+const showDownloads=document.getElementById("showPreviousDownloads");
+showDownloads.addEventListener('click',previousDownloads);
 async function previousDownloads(){
     const previosDownloadDiv=document.getElementById('previousDownloads');
+    previosDownloadDiv.style.border='1px solid green';
    
     const url="http://localhost:3000/previousdownloads"
     let response;
@@ -22,6 +25,13 @@ async function previousDownloads(){
         ul.appendChild(li);
     });
     previosDownloadDiv.appendChild(ul);
+    
+    const closeDownload=`<button type="click" id="closeDownloadBtn">Close</button>`;
+    previosDownloadDiv.innerHTML+=closeDownload;
+    document.getElementById('closeDownloadBtn').addEventListener('click',(e)=>{
+        previosDownloadDiv.innerHTML='';
+        previosDownloadDiv.style.border="none";    
+    })
 
 
 }
@@ -210,3 +220,36 @@ function pagination(response){
 })
 
 }
+
+const leaderBoardBtn=document.getElementById('showLeaderBoard');
+
+leaderBoardBtn.addEventListener('click',async (e)=>{
+    const url="http://localhost:3000/leaderboard";
+    const response= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+    
+    const data= response.data.leaderBoard;
+    console.log(data)
+    const leaderBoard=document.getElementById('leaderBoard');
+    
+    leaderBoard.innerHTML='';
+    leaderBoard.style.border='1px solid black'
+    const innerDiv=document.createElement('div');
+    const h2=document.createTextNode('Leader Board')
+    innerDiv.appendChild(h2);
+    const ul=document.createElement('ul');
+    data.forEach(o=>{
+        const li=document.createElement('li');
+        li.innerHTML=`${o.name}-${o.total_expense}`;
+        ul.appendChild(li);
+    })
+    innerDiv.appendChild(ul);
+    leaderBoard.appendChild(innerDiv);
+
+    const closeleaderBoard=`<button type="click" id="closeLeaderBoardBtn">x</button>`;
+    leaderBoard.innerHTML+=closeleaderBoard;
+
+    
+    document.getElementById('closeLeaderBoardBtn').addEventListener('click',(e)=>{
+        leaderBoard.innerHTML='';
+    })
+})
