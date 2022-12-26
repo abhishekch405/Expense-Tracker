@@ -94,12 +94,20 @@ async function displayExpenses(limit,page=1,rows=localStorage.getItem('rows')){
     const url=`http://localhost:3000/expense/get?limit=${limit}&page=${page}&rows=${rows}`
 try {
     const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
+    //new
+    const cartheader=document.getElementsByClassName('cart-header')[0];
+    cartheader.innerHTML='';
+    cartheader.innerHTML=`<span class="cart-item cart-column">Amount</span>
+                          <span class="cart-price cart-column">Description</span>
+                          <span class="cart-quantity cart-column">Category</span>`;
+    //end
     const cart=document.getElementById('cart-items');
     cart.innerHTML="";
     response.data.expenses.forEach(expense=>{
         addNewLineElement(expense);
     })
     pagination(response)
+    
 } 
 catch (error) {
     console.log(error);

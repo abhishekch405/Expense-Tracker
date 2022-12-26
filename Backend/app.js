@@ -39,7 +39,7 @@ Download.belongsTo(Users);
 sequelize
     .sync()
     .then(()=>{
-        app.listen(3000);
+        app.listen(process.env.port || 3000);
     })
     .catch(error=>console.log(error));
 

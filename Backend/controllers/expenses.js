@@ -4,12 +4,6 @@ const Sequelize=require('sequelize');
 const Op=Sequelize.Op;
 const S3Services=require('../services/s3Services');
 const sequelize = require('../util/database');
-// exports.getExpenses=  (req,res,next)=>{
-//     Expenses.findAll().then(expenses=>{
-//         // console.log("These are the expenses",expenses[0]);
-//         res.status(201).json(expenses);
-//     }).catch(err=>console.log(err));
-// };
 
 exports.postExpenses= async (req,res,next)=>{
     const {amount,description,category}=req.body;

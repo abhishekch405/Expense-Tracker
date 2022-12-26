@@ -5,7 +5,7 @@ const {v4:uuidv4} =require('uuid');
 
 
 exports.forgotPassword=(req,res,next)=>{
-console.log("forgotPassword function");
+    console.log("forgotPassword function");
     const email=req.body.email;
     const uuid=uuidv4();
 
@@ -95,7 +95,4 @@ exports.updatePassword=async (req,res,next)=>{
         console.log(err);
         res.json({error:err});
     }
-    
-    
-
 }
