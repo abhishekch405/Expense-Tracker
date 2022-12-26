@@ -131,7 +131,7 @@ let amount=499;
 let orderId;
 
 
-premium.addEventListener('click',()=>{
+premium.addEventListener('click',async ()=>{
         container.classList.add("active");
         const url="http://localhost:3000/premium/order";
         const obj={amount:amount};
@@ -165,10 +165,11 @@ payBtn.addEventListener('click',(e)=>{
         "handler": function (response){
             paymentId=response.razorpay_payment_id;
             signature=response.razorpay_signature;
+           
            alert(`Payment successful: your order ID: ${response.razorpay_order_id} and payment ID:${response.razorpay_payment_id}`);
             window.location.href="../premiumFrontEnd/premium.html"
 
-            console.log("oishoiajiaj",orderId);
+            //console.log("oishoiajiaj",orderId);
 
             axios.post('http://localhost:3000/transaction/detail',{orderId:orderId,paymentId:paymentId},{headers:{'Authorization':`Bearer ${localStorage.getItem('token')}`}})
             .then()

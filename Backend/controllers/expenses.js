@@ -8,9 +8,8 @@ const sequelize = require('../util/database');
 exports.postExpenses= async (req,res,next)=>{
     const {amount,description,category}=req.body;
     try {
-        const expense=await req.user.createExpense({amount:amount,description:description,category:category});
-        console.log("generated ",expense.id);   
-         return res.status(201).json({id:expense.id,success:true,message:'Added an expenses'});
+        const expense=await req.user.createExpense({amount:amount,description:description,category:category});   
+        return res.status(201).json({id:expense.id,success:true,message:'Added an expenses'});
     } catch (error) {
         console.log(error);
     }
@@ -38,26 +37,26 @@ exports.getExpenses=async (req,res,next)=>{
     }
 
    try {
-    const count=await req.user.countExpenses({where:{
-        createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
-    }
-    });
-    totalExpenses=count;
+            const count=await req.user.countExpenses({where:{
+                createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+            }
+            });
+            totalExpenses=count;
 
-    const expenses=await req.user.getExpenses({where:{
-        createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
-    },
-    order : [['createdAt','DESC']],
-    offset:(page-1)*rows,
-    limit:rows
-    });
+            const expenses=await req.user.getExpenses({where:{
+                createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+            },
+            order : [['createdAt','DESC']],
+            offset:(page-1)*rows,
+            limit:rows
+            });
 
-    return res.status(200).json({success:true,expenses:expenses,currentPage:page,hasPreviousPage:page>1,hasNextPage:(page*rows)<totalExpenses,previousPage:page-1,nextPage:page+1,lastPage:Math.ceil(totalExpenses/rows)});
+            return res.status(200).json({success:true,expenses:expenses,currentPage:page,hasPreviousPage:page>1,hasNextPage:(page*rows)<totalExpenses,previousPage:page-1,nextPage:page+1,lastPage:Math.ceil(totalExpenses/rows)});
 
 
    } catch (error) {
-    res.json(error);
-    console.log(error);
+        res.json(error);
+        console.log(error);
    }
 }
 
@@ -67,8 +66,6 @@ exports.deleteExpenses=async (req,res,next)=>{
         const expense=await req.user.getExpenses({where:{id:req.body.id}});
         expense[0].destroy();
         res.json({success:true,message:'Deleted an expenses'})
-
-
     } catch (error) {
         console.log(error);
     }
@@ -77,7 +74,7 @@ exports.deleteExpenses=async (req,res,next)=>{
 exports.downloadExpenses=async (req,res,next)=>{
     try {
         const expenses=await req.user.getExpenses();
-        console.log("expenses uashuah", expenses)
+        console.log("expenses", expenses)
         const userId=req.user.id;
         const stringified=JSON.stringify(expenses);
         const fileName=`expenses${userId}/${new Date()}`;
@@ -102,18 +99,20 @@ exports.previousdownload=async (req,res,next)=>{
 }
 
 exports.leaderboard=async (req,res,next)=>{
-
-    const leaderBoard= await Users.findAll({
-        attributes:['id','name',[sequelize.fn('sum',sequelize.col('expenses.amount')),'total_expense']],
-        include:[
-            {
-                model:Expenses,
-                attributes:[]
-            }
-        ],
-        group:['users.id'],
-        order:[['total_expense','DESC']]
-    })
-
-    return res.json({success:true,leaderBoard:leaderBoard});
+    try {    
+        const leaderBoard= await Users.findAll({
+            attributes:['id','name',[sequelize.fn('sum',sequelize.col('expenses.amount')),'total_expense']],
+            include:[
+                {
+                    model:Expenses,
+                    attributes:[]
+                }
+            ],
+            group:['users.id'],
+            order:[['total_expense','DESC']]
+        })
+        return res.json({success:true,leaderBoard:leaderBoard});        
+    } catch (error) {
+        res.json(error);
+    }
 }

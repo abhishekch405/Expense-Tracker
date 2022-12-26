@@ -73,7 +73,7 @@ forgotPassword.addEventListener('click',(e)=>{
         console.log(obj);
         axios.post(url,obj)
             .then(response=>{
-                console.log(response.data);
+                //console.log(response.data);
                 if(!response.data.success){
                     alert(response.data.message);
                     //window.location.href='./signup.html'

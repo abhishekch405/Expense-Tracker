@@ -2,13 +2,13 @@ const AWS=require('aws-sdk');
 const {json}= require('express/lib/response');
 
 const uploadToS3=async (fileName,data)=>{
-    const bucketName='expensetracker987';
+    const bucketName=process.env.BUCKET_NAME;
     try {
         
         const s3Bucket=await new AWS.S3({
             
-            accessKeyId:`${process.env.accessKeyId}`,
-            secretAccessKey:`${process.env.secretAccessKey}`
+            accessKeyId:process.env.ACCESS_KEY_ID,
+            secretAccessKey:process.env.SECRET_ACCESS_KEY
         });
     
         const params={

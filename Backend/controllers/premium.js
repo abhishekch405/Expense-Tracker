@@ -5,8 +5,8 @@ const Orders=require("../models/orders");
 
 exports.premiumOrder= async (req,res,next)=>{
     var instance=new Razorpay({
-        key_id:`rzp_test_vQI2AlV3SQaMgo`,
-        key_secret:`q3Ih130FdmhUMqRu7BH3Vinr`
+        key_id:process.env.RZ_KEY_ID,
+        key_secret:process.env.RZ_KEY_SECRET
     });
 
     var options={
@@ -21,26 +21,34 @@ exports.premiumOrder= async (req,res,next)=>{
         }
         else{
             console.log("This is the order",order);
-            res.status(201).json({order:order,success:true});
+            return res.status(201).json({order:order,success:true});
         }
 
     })
 }
 
 exports.updateTransaction=async (req,res,next)=>{
-        req.user.update({hasPremium:true})
-            .then()
-            .catch(err=>{
-                console.log(err);
-                res.json({err:err})
-            });
-        console.log(req.body);
-        req.user.createOrder({orderId:req.body.orderId,paymentId:req.body.paymentId})
-            .then()
-            .catch(err=>{
-                console.log(err);
-                res.json({err:err})
-            })
+
+        try {
+            await req.user.update({hasPremium:true})
+            await req.user.createOrder({orderId:req.body.orderId,paymentId:req.body.paymentId})
+        } catch (error) {
+            res.json({err:err})
+        }
+
+        // req.user.update({hasPremium:true})
+        //     .then()
+        //     .catch(err=>{
+        //         console.log(err);
+        //         res.json({err:err})
+        //     });
+        // console.log(req.body);
+        // req.user.createOrder({orderId:req.body.orderId,paymentId:req.body.paymentId})
+        //     .then()
+        //     .catch(err=>{
+        //         console.log(err);
+        //         res.json({err:err})
+        //     })
 }
 
 
