@@ -49,7 +49,7 @@ exports.resetPassword=async (req,res,next)=>{
             <body>
                 <div id="div" style="display:flex; flex-direction:column; margin-top:10rem; align-items:center; justify-content:center;">
                     <h3>Enter Your New Password</h3>
-                    <form id="form"action="http://localhost:3000/password/updatepassword" method="POST" >
+                    <form id="form"action="http://${process.env.SERVER_IP}:3000/password/updatepassword" method="POST" >
                     <label for="password">Password:</label>
                     <input type="password"  id="password" name="password" required>
                     <br><br>

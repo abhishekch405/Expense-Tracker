@@ -6,7 +6,7 @@ async function previousDownloads(){
     const previosDownloadDiv=document.getElementById('previousDownloads');
     previosDownloadDiv.style.border='1px solid green';
    
-    const url="http://localhost:3000/previousdownloads"
+    const url="http://13.232.112.39:3000/previousdownloads"
     let response;
     try {
         response= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
@@ -71,7 +71,7 @@ weeklyBtn.addEventListener('click',()=>{
 
 const downloadBtn=document.getElementById('download');
 downloadBtn.addEventListener('click',async ()=>{
-    const url="http://localhost:3000/download"
+    const url="http://13.232.112.39:3000/download"
     try {
         const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
         const link=document.createElement('a');
@@ -91,7 +91,7 @@ async function displayExpenses(limit,page=1,rows=localStorage.getItem('rows')){
     const carth2tag=document.querySelector('#cart h2');
     carth2tag.innerHTML=`<h2>EXPENSES</h2>`
 
-    const url=`http://localhost:3000/expense/get?limit=${limit}&page=${page}&rows=${rows}`
+    const url=`http://13.232.112.39:3000/expense/get?limit=${limit}&page=${page}&rows=${rows}`
 try {
     const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
     //new
@@ -123,7 +123,7 @@ function addExpenses(e){
     const amount=document.getElementById('amount');
     const description=document.getElementById('description');
     const category=document.getElementById('category');
-    url='http://localhost:3000/expense/add';
+    url='http://13.232.112.39:3000/expense/add';
 
     
     const obj={
@@ -165,7 +165,7 @@ const del=document.getElementById("cart-items");
 del.addEventListener('click',(e)=>{
     if(e.target.className=="del"){
         console.log(e.target.id);
-        const url="http://localhost:3000/expense/delete";
+        const url="http://13.232.112.39:3000/expense/delete";
         const obj={
             id:e.target.id
         }
@@ -232,7 +232,7 @@ function pagination(response){
 const leaderBoardBtn=document.getElementById('showLeaderBoard');
 
 leaderBoardBtn.addEventListener('click',async (e)=>{
-    const url="http://localhost:3000/leaderboard";
+    const url="http://13.232.112.39:3000/leaderboard";
     const response= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
     
     const data= response.data.leaderBoard;

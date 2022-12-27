@@ -43,6 +43,10 @@ app.use(premiumRoutes);
 app.use(expenseRoutes);
 app.use(forgotpasswordRoutes);
 
+app.use((req,res)=>{
+    
+    res.sendFile(path.join(__dirname,'../',`frontEnd/register/${req.url}`));
+})
 //{force:true}
 Users.hasMany(Expenses);
 Expenses.belongsTo(Users);

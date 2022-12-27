@@ -15,7 +15,7 @@ async function login(e){
             email.value="";
             password.value="";
             let res;
-            const url='http://localhost:3000/user/login';
+            const url='http://13.232.112.39:3000/user/login';
             try {
                 res=await axios.post(url,object);
                 console.log("response of post ",res.data);
@@ -64,7 +64,7 @@ forgotPassword.addEventListener('click',(e)=>{
     resetbutton.addEventListener('click',(e)=>{
         e.preventDefault();
         //console.log(e);
-        const url="http://localhost:3000/password/forgotpassword";
+        const url="http://13.232.112.39:3000/password/forgotpassword";
         const email=document.getElementById('resetemail');
 
         const obj={

@@ -1,6 +1,6 @@
 // window.addEventListener("DOMContentLoaded",showExpenses);
 // async function showExpenses(){
-//     const url="http://localhost:3000/expense/get"
+//     const url="http://13.232.112.39:3000/expense/get"
 //     try {
 //         const expenses= await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
 //         console.log(typeof expenses.data);
@@ -42,7 +42,7 @@ async function displayExpenses(limit,page=1,rows=localStorage.getItem('rows')){
     const carth2tag=document.querySelector('#cart h2');
     carth2tag.innerHTML=`<h2>EXPENSES</h2>`
 
-    const url=`http://localhost:3000/expense/get?limit=${limit}&page=${page}&rows=${rows}`
+    const url=`http://13.232.112.39:3000/expense/get?limit=${limit}&page=${page}&rows=${rows}`
 try {
     const response=await axios.get(url,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}});
     const cart=document.getElementById('cart-items');
@@ -68,7 +68,7 @@ function addExpenses(e){
     const amount=document.getElementById('amount');
     const description=document.getElementById('description');
     const category=document.getElementById('category');
-    url='http://localhost:3000/expense/add';
+    url='http://13.232.112.39:3000/expense/add';
 
     
     const obj={
@@ -110,7 +110,7 @@ const del=document.getElementById("cart-items");
 del.addEventListener('click',(e)=>{
     if(e.target.className=="del"){
         console.log(e.target.id);
-        const url="http://localhost:3000/expense/delete";
+        const url="http://13.232.112.39:3000/expense/delete";
         const obj={
             id:e.target.id
         }
@@ -133,7 +133,7 @@ let orderId;
 
 premium.addEventListener('click',async ()=>{
         container.classList.add("active");
-        const url="http://localhost:3000/premium/order";
+        const url="http://13.232.112.39:3000/premium/order";
         const obj={amount:amount};
     
     axios.post(url,obj,{headers:{"Authorization":`Bearer ${localStorage.getItem('token')}`}})
@@ -171,7 +171,7 @@ payBtn.addEventListener('click',(e)=>{
 
             //console.log("oishoiajiaj",orderId);
 
-            axios.post('http://localhost:3000/transaction/detail',{orderId:orderId,paymentId:paymentId},{headers:{'Authorization':`Bearer ${localStorage.getItem('token')}`}})
+            axios.post('http://13.232.112.39:3000/transaction/detail',{orderId:orderId,paymentId:paymentId},{headers:{'Authorization':`Bearer ${localStorage.getItem('token')}`}})
             .then()
             .catch(err=>{
                 console.log(err)

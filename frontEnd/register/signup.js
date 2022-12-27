@@ -19,7 +19,7 @@ async function signup(e){
             password.value='';
             email.value="";
            let res;
-            const url='http://localhost:3000/user/signup';
+            const url='http://13.232.112.39:3000/user/signup';
             try {
                 res=await axios.post(url,newuser);
                 console.log(res);
